@@ -131,6 +131,7 @@ namespace Backend
             #region µù¥UªA°È
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IOrderItemService, OrderItemService>();
             #endregion
 
             #region µù¥U Razor Model
