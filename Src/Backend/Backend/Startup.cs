@@ -20,6 +20,13 @@ using System.Diagnostics;
 using ShareBusiness.Helpers;
 using DataTransferObject.DTOs;
 using Newtonsoft.Json;
+using Syncfusion.Blazor;
+using Microsoft.EntityFrameworkCore;
+using DataAccessLayer.Models;
+using AutoMapper;
+using Backend.Helpers;
+using Backend.Services;
+using Backend.RazorModels;
 
 namespace Backend
 {
@@ -39,6 +46,19 @@ namespace Backend
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+
+            #region Syncfusion 元件
+            services.AddSyncfusionBlazor();
+            #endregion
+
+            #region EF Core
+            string foo = Configuration.GetConnectionString(MagicHelper.DefaultConnectionString);
+            services.AddDbContext<SchoolContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString(
+                MagicHelper.DefaultConnectionString)), ServiceLifetime.Transient);
+            AddOtherServices(services);
+            services.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Startup));
+            #endregion
 
             #region 加入使用 Cookie 認證需要的宣告
             services.Configure<CookiePolicyOptions>(options =>
@@ -106,9 +126,27 @@ namespace Backend
             #endregion
         }
 
+        private static void AddOtherServices(IServiceCollection services)
+        {
+            #region 註冊服務
+            services.AddTransient<IProductService, ProductService>();
+            #endregion
+
+            #region 註冊 Razor Model
+            services.AddTransient<ProductRazorModel>();
+            #endregion
+
+            #region 其他服務註冊
+            #endregion
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            #region Syncfusion License Registration
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("License Key");
+            #endregion
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
