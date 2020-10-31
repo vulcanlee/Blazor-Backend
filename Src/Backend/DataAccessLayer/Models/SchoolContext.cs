@@ -144,6 +144,10 @@ namespace DataAccessLayer.Models
 
             modelBuilder.Entity<Order>(entity =>
             {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
                 entity.Property(e => e.OrderDate).HasColumnType("date");
 
                 entity.Property(e => e.RequiredDate).HasColumnType("date");
@@ -160,6 +164,10 @@ namespace DataAccessLayer.Models
                 entity.Property(e => e.Discount).HasColumnType("decimal(4, 2)");
 
                 entity.Property(e => e.ListPrice).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderItem)

@@ -15,6 +15,8 @@ namespace Backend.Helpers
         {
             CreateMap<Product, ProductAdapterModel>();
             CreateMap<ProductAdapterModel, Product>();
+            CreateMap<Order, OrderAdapterModel>();
+            CreateMap<OrderAdapterModel, Order>();
         }
     }
 }

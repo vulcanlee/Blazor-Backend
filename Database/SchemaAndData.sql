@@ -48,6 +48,7 @@ IF NOT EXISTS (SELECT * FROM sys.objects
 BEGIN
 CREATE TABLE [Order] (
 	OrderId INT IDENTITY (1, 1) ,
+	[Name] NVARCHAR (255) NOT NULL,
 	[Status] tinyint NOT NULL,
 	-- Order status: 1 = Pending; 2 = Processing; 3 = Rejected; 4 = Completed
 	OrderDate DATE NOT NULL,
@@ -69,6 +70,7 @@ BEGIN
 CREATE TABLE OrderItem (
 	OrderId INT,
 	OrderItemId INT IDENTITY (1, 1) ,
+	[Name] NVARCHAR (255) NOT NULL,
 	ProductId INT NOT NULL,
 	Quantity INT NOT NULL,
 	ListPrice DECIMAL (10, 2) NOT NULL,

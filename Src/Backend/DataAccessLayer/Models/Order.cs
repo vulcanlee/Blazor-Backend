@@ -11,6 +11,7 @@ namespace DataAccessLayer.Models
         }
 
         public int OrderId { get; set; }
+        public string Name { get; set; }
         public byte Status { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime RequiredDate { get; set; }
