@@ -22,8 +22,4 @@
     <ProjectReference Include="..\ShareDomain\ShareDomain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\Pickers\" />
-  </ItemGroup>
-
 </Project>

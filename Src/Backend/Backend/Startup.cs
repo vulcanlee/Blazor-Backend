@@ -137,6 +137,7 @@ namespace Backend
             #region 註冊 Razor Model
             services.AddTransient<OrderRazorModel>();
             services.AddTransient<ProductRazorModel>();
+            services.AddTransient<OrderItemRazorModel>();
             #endregion
 
             #region 其他服務註冊

@@ -34,7 +34,7 @@ namespace Backend.Services
                 .AsNoTracking()
                 .Include(x => x.Order)
                 .Include(x => x.Product)
-                .Where(x => x.OrderItemId == id)
+                .Where(x => x.OrderId == id)
                 .AsQueryable());
         }
 

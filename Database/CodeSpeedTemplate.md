@@ -16,11 +16,11 @@ OrderItemView
 
 OrderItemPage           `註冊功能表選項`
 
-EquipmentTemplatePicker
+ProductPicker
 
 
 
-OrderItemByPolicyView
+OrderItemByOrderView
 
 
 WorkingProjectAdapterModel
