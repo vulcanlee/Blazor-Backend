@@ -1,9 +1,10 @@
 ﻿@page "/Product"
 @using Backend.Components.Views
+@using ShareBusiness.Helpers
 
 <div>
     <h1>商品管理</h1>
-    <ProductView PageSize="15" />
+    <ProductView PageSize="@MagicHelper.GridPageSize" />
 </div>
 
 

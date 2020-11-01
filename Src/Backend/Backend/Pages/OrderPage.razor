@@ -1,9 +1,10 @@
 ﻿@page "/Order"
 @using Backend.Components.Views
+@using ShareBusiness.Helpers
 
 <div>
     <h1>訂單管理</h1>
-    <OrderItemByOrderView PageSize="15" />
+    <OrderItemByOrderView PageSize="@MagicHelper.GridPageSize" />
 </div>
 
 

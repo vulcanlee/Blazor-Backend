@@ -13,6 +13,7 @@ namespace ShareBusiness.Helpers
         public static readonly string DefaultConnectionString = "DefaultDbContext";
         public static readonly string PersonInstructor = "講師";
         public static readonly string PersonStudent = "學生";
+        public static readonly int GridPageSize = 15;
 
         #endregion
 
