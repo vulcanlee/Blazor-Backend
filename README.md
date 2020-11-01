@@ -8,6 +8,11 @@
 * 一對多的 CRUD 練習
 * 可以開啟視窗，選擇其他資料表內的紀錄
 
+## 使用方式
+
+* 使用 Database\SchemaAndData.sql 在本機 localDB 資料庫內，建立範例資料庫
+* 可以開始執行該 Blazor 專案，觀看預設的程式碼運作效果
+
 ## 方便開發摘要內容
 
 OrderItem
