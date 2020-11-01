@@ -21,8 +21,6 @@ namespace Backend.Controllers
     public class LoginController : ControllerBase
     {
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
-        int UserID;
-        int TokenVersion;
 
         public LoginController(Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
@@ -32,38 +30,38 @@ namespace Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(LoginRequestDTO loginRequestDTO)
         {
+            APIResult apiResult;
+            await Task.Yield();
             if (ModelState.IsValid == false)
             {
-                APIResult apiResult = APIResultFactory.Build(false, StatusCodes.Status200OK,
-                 ErrorMessageEnum.傳送過來的資料有問題);
+                apiResult = APIResultFactory.Build(false, StatusCodes.Status200OK,
+                ErrorMessageEnum.傳送過來的資料有問題);
                 return Ok(apiResult);
             }
             if (loginRequestDTO.Account != "admin" && loginRequestDTO.Account != "user")
             {
-                APIResult apiResult = APIResultFactory.Build(false, StatusCodes.Status400BadRequest,
-                 ErrorMessageEnum.帳號或密碼不正確);
+                apiResult = APIResultFactory.Build(false, StatusCodes.Status400BadRequest,
+                ErrorMessageEnum.帳號或密碼不正確);
                 return BadRequest(apiResult);
             }
 
+            string token = GenerateToken(loginRequestDTO);
+            string refreshToken = GenerateRefreshToken(loginRequestDTO);
+
+            LoginResponseDTO LoginResponseDTO = new LoginResponseDTO()
             {
-                string token = GenerateToken(loginRequestDTO);
-                string refreshToken = GenerateRefreshToken(loginRequestDTO);
+                Account = loginRequestDTO.Account,
+                Id = 0,
+                Name = loginRequestDTO.Account,
+                Token = token,
+                TokenExpireMinutes = Convert.ToInt32(configuration["Tokens:JwtExpireMinutes"]),
+                RefreshToken = refreshToken,
+                RefreshTokenExpireDays = Convert.ToInt32(configuration["Tokens:JwtRefreshExpireDays"]),
+            };
 
-                LoginResponseDTO LoginResponseDTO = new LoginResponseDTO()
-                {
-                    Account = loginRequestDTO.Account,
-                    Id = 0,
-                    Name = loginRequestDTO.Account,
-                    Token = token,
-                    TokenExpireMinutes = Convert.ToInt32(configuration["Tokens:JwtExpireMinutes"]),
-                    RefreshToken = refreshToken,
-                    RefreshTokenExpireDays = Convert.ToInt32(configuration["Tokens:JwtRefreshExpireDays"]),
-                };
-
-                APIResult apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
-                    ErrorMessageEnum.None, payload: LoginResponseDTO);
-                return Ok(apiResult);
-            }
+            apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
+               ErrorMessageEnum.None, payload: LoginResponseDTO);
+            return Ok(apiResult);
 
         }
 
@@ -73,7 +71,7 @@ namespace Backend.Controllers
         public async Task<IActionResult> RefreshToken()
         {
             APIResult apiResult;
-
+            await Task.Yield();
             LoginRequestDTO loginRequestDTO = new LoginRequestDTO()
             {
                 Account = User.FindFirst(JwtRegisteredClaimNames.Sid)?.Value,

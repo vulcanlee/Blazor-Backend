@@ -7,28 +7,16 @@ namespace ShareBusiness.Helpers
     public class MagicHelper
     {
         #region 定義神奇字串或者神奇數值
-        public static readonly string AppName = "Contoso 大學管理系統";
-        public static readonly string PersonInstructorTitle = "講師";
-        public static readonly string PersonStudentTitle = "學生";
+        public static readonly string AppName = "Bazor Server 制式開發專案範例";
+        public static readonly string MenuMainTitle = "制式開發範例";
+        public static readonly string 訂單管理功能名稱 = "訂單管理";
+        public static readonly string 商品管理功能名稱 = "商品管理";
         public static readonly string DefaultConnectionString = "DefaultDbContext";
-        public static readonly string PersonInstructor = "講師";
-        public static readonly string PersonStudent = "學生";
         public static readonly int GridPageSize = 15;
 
         #endregion
 
         #region 支援方法
-        public static string GetPersonTypeName(DateTime? HireDate)
-        {
-            if (HireDate.HasValue)
-            {
-                return PersonInstructor;
-            }
-            else
-            {
-                return PersonStudent;
-            }
-        }
         #endregion
     }
 }

@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,7 +12,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
-using System.Diagnostics;
 using ShareBusiness.Helpers;
 using DataTransferObject.DTOs;
 using Newtonsoft.Json;
@@ -47,11 +42,11 @@ namespace Backend
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
-            #region Syncfusion 元件
+            #region Syncfusion 元件使用的宣告
             services.AddSyncfusionBlazor();
             #endregion
 
-            #region EF Core
+            #region EF Core & AutoMapper 使用的宣告
             string foo = Configuration.GetConnectionString(MagicHelper.DefaultConnectionString);
             services.AddDbContext<SchoolContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString(
@@ -60,7 +55,7 @@ namespace Backend
             services.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Startup));
             #endregion
 
-            #region 加入使用 Cookie 認證需要的宣告
+            #region 加入使用 Cookie & JWT 認證需要的宣告
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
@@ -68,7 +63,7 @@ namespace Backend
             });
             services.AddAuthentication(
                 CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie()
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -87,8 +82,6 @@ namespace Backend
                     {
                         OnAuthenticationFailed =  async context =>
                         {
-                            ////context.NoResult();
-
                             context.Response.StatusCode = 401;
                             context.Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = context.Exception.Message;
                             APIResult apiResult = JWTTokenFailHelper.GetFailResult(context.Exception);
@@ -97,10 +90,10 @@ namespace Backend
                             await context.Response.WriteAsync(JsonConvert.SerializeObject(apiResult));
                             return ;
                         },
-                        OnChallenge = async context =>
+                        OnChallenge = context =>
                         {
                             context.HandleResponse();
-                            return ;
+                            return Task.CompletedTask;
                         },
                         OnTokenValidated = context =>
                         {
@@ -111,7 +104,6 @@ namespace Backend
 
                     };
                 });
-            //JwtBearerDefaults.AuthenticationScheme
             #endregion
 
             #region 新增控制器和 API 相關功能的支援，但不會加入 views 或 pages

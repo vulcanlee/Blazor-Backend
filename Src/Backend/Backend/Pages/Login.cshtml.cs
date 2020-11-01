@@ -46,7 +46,6 @@ namespace Backend.Pages
             if (string.IsNullOrEmpty(Username) == false && string.IsNullOrEmpty(Password) == false)
             {
                 bool result = true;
-                string msg = "";
                 if(Username!= "admin" && Username!="user")
                 {
                     result = false;
