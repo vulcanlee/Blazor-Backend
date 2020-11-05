@@ -23,6 +23,26 @@ GO
 USE School;
 GO
 
+-- Create the HOLUser table.
+IF NOT EXISTS (SELECT * FROM sys.objects 
+        WHERE object_id = OBJECT_ID(N'[dbo].[HOLUser]') 
+        AND type in (N'U'))
+BEGIN
+CREATE TABLE HOLUser (
+	HOLUserId INT IDENTITY (1, 1) ,
+	[Name] NVARCHAR (255) NOT NULL,
+	[Account] NVARCHAR (255) NOT NULL,
+	[Password] NVARCHAR (255) NOT NULL,
+	[TokenVersion] INT NOT NULL,
+	[Level] INT NOT NULL,
+ CONSTRAINT [PK_HOLUser] PRIMARY KEY CLUSTERED 
+(
+    [HOLUserId] ASC
+)WITH (IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+
 -- Create the Product table.
 IF NOT EXISTS (SELECT * FROM sys.objects 
         WHERE object_id = OBJECT_ID(N'[dbo].[Product]') 
@@ -748,3 +768,30 @@ VALUES (1050, 30, 3.5);
 INSERT INTO dbo.StudentGrade (CourseID, StudentID, Grade)
 VALUES (1061, 30, 4);
 GO
+
+-- Insert data into the HOLUser table.
+SET IDENTITY_INSERT dbo.HOLUser ON
+GO
+INSERT INTO dbo.HOLUser (HOLUserId, [Name], [Account], [Password], [TokenVersion], [Level])
+VALUES (1, 'user1', 'user1', 'pw', 0, 0);
+INSERT INTO dbo.HOLUser (HOLUserId, [Name], [Account], [Password], [TokenVersion], [Level])
+VALUES (2, 'user2', 'user2', 'pw', 0, 0);
+INSERT INTO dbo.HOLUser (HOLUserId, [Name], [Account], [Password], [TokenVersion], [Level])
+VALUES (3, 'user3', 'user3', 'pw', 0, 0);
+INSERT INTO dbo.HOLUser (HOLUserId, [Name], [Account], [Password], [TokenVersion], [Level])
+VALUES (4, 'user4', 'user4', 'pw', 0, 0);
+INSERT INTO dbo.HOLUser (HOLUserId, [Name], [Account], [Password], [TokenVersion], [Level])
+VALUES (5, 'user5', 'user5', 'pw', 0, 0);
+INSERT INTO dbo.HOLUser (HOLUserId, [Name], [Account], [Password], [TokenVersion], [Level])
+VALUES (6, 'user6', 'user6', 'pw', 0, 0);
+INSERT INTO dbo.HOLUser (HOLUserId, [Name], [Account], [Password], [TokenVersion], [Level])
+VALUES (7, 'user7', 'user7', 'pw', 0, 0);
+INSERT INTO dbo.HOLUser (HOLUserId, [Name], [Account], [Password], [TokenVersion], [Level])
+VALUES (8, 'user8', 'user8', 'pw', 0, 0);
+INSERT INTO dbo.HOLUser (HOLUserId, [Name], [Account], [Password], [TokenVersion], [Level])
+VALUES (9, 'user9', 'user9', 'pw', 0, 0);
+GO
+SET IDENTITY_INSERT dbo.Person OFF
+GO
+
+
