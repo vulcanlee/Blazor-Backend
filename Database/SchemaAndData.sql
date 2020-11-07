@@ -789,7 +789,7 @@ VALUES (7, 'user7', 'user7', 'pw', 0, 0);
 INSERT INTO dbo.HOLUser (HOLUserId, [Name], [Account], [Password], [TokenVersion], [Level])
 VALUES (8, 'user8', 'user8', 'pw', 0, 0);
 INSERT INTO dbo.HOLUser (HOLUserId, [Name], [Account], [Password], [TokenVersion], [Level])
-VALUES (9, 'user9', 'user9', 'pw', 0, 0);
+VALUES (9, 'user9', 'user9', 'pw', 0, 4);
 GO
 SET IDENTITY_INSERT dbo.Person OFF
 GO

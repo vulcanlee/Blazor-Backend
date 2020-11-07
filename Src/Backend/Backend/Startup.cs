@@ -92,7 +92,7 @@ namespace Backend
                         },
                         OnChallenge = context =>
                         {
-                            context.HandleResponse();
+                            //context.HandleResponse();
                             return Task.CompletedTask;
                         },
                         OnTokenValidated = context =>

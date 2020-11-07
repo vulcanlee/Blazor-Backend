@@ -108,7 +108,7 @@ namespace Backend.Services
             {
                 return (null, "密碼不正確");
             }
-            throw new NotImplementedException();
+            return(user,"");
         }
     }
 }
