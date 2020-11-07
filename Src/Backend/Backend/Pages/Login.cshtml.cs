@@ -21,8 +21,8 @@ namespace Backend.Pages
         public LoginModel(IHoluserService holuserService)
         {
 #if DEBUG
-            Username = "user";
-            Password = "123";
+            Username = "user1";
+            Password = "pw";
             PasswordType = "";
             this.holuserService = holuserService;
 #endif
