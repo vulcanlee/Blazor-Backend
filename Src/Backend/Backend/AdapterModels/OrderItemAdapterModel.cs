@@ -18,7 +18,6 @@ namespace Backend.AdapterModels
         public decimal Discount { get; set; }
 
         public int OrderId { get; set; }
-        public string OrderName { get; set; }
         public OrderAdapterModel Order { get; set; }
         public ProductAdapterModel Product { get; set; }
     }
