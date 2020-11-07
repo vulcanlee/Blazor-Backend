@@ -11,6 +11,7 @@ namespace ShareBusiness.Helpers
         public static readonly string MenuMainTitle = "制式開發範例";
         public static readonly string 訂單管理功能名稱 = "訂單管理";
         public static readonly string 商品管理功能名稱 = "商品管理";
+        public static readonly string 使用者帳號管理功能名稱 = "使用者帳號管理";
         public static readonly string DefaultConnectionString = "DefaultDbContext";
         public static readonly int GridPageSize = 15;
 

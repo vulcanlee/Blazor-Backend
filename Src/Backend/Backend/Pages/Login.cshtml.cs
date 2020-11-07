@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Backend.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -14,12 +15,15 @@ namespace Backend.Pages
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        public LoginModel()
+        private readonly IHoluserService holuserService;
+
+        public LoginModel(IHoluserService holuserService)
         {
 #if DEBUG
             Username = "user";
             Password = "123";
             PasswordType = "";
+            this.holuserService = holuserService;
 #endif
         }
         [BindProperty]

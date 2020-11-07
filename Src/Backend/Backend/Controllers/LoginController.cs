@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShareBusiness.Factories;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Backend.Services;
 
 namespace Backend.Controllers
 {
@@ -21,10 +22,13 @@ namespace Backend.Controllers
     public class LoginController : ControllerBase
     {
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
+        private readonly IHoluserService holuserService;
 
-        public LoginController(Microsoft.Extensions.Configuration.IConfiguration configuration)
+        public LoginController(Microsoft.Extensions.Configuration.IConfiguration configuration,
+            IHoluserService holuserService)
         {
             this.configuration = configuration;
+            this.holuserService = holuserService;
         }
         [AllowAnonymous]
         [HttpPost]

@@ -18,6 +18,7 @@ namespace DataAccessLayer.Models
         public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<CourseInstructor> CourseInstructor { get; set; }
         public virtual DbSet<Department> Department { get; set; }
+        public virtual DbSet<Holuser> Holuser { get; set; }
         public virtual DbSet<OfficeAssignment> OfficeAssignment { get; set; }
         public virtual DbSet<OnsiteCourse> OnsiteCourse { get; set; }
         public virtual DbSet<Order> Order { get; set; }
@@ -91,6 +92,25 @@ namespace DataAccessLayer.Models
                     .HasMaxLength(50);
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<Holuser>(entity =>
+            {
+                entity.ToTable("HOLUser");
+
+                entity.Property(e => e.HoluserId).HasColumnName("HOLUserId");
+
+                entity.Property(e => e.Account)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(255);
             });
 
             modelBuilder.Entity<OfficeAssignment>(entity =>

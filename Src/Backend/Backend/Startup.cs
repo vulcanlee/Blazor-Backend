@@ -121,12 +121,14 @@ namespace Backend
         private static void AddOtherServices(IServiceCollection services)
         {
             #region µù¥UªA°È
+            services.AddTransient<IHoluserService, HoluserService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IOrderItemService, OrderItemService>();
             #endregion
 
             #region µù¥U Razor Model
+            services.AddTransient<HoluserRazorModel>();
             services.AddTransient<OrderRazorModel>();
             services.AddTransient<ProductRazorModel>();
             services.AddTransient<OrderItemRazorModel>();

@@ -13,6 +13,8 @@ namespace Backend.Helpers
     {
         public AutoMapping()
         {
+            CreateMap<Holuser, HoluserAdapterModel>();
+            CreateMap<HoluserAdapterModel, Holuser>();
             CreateMap<Product, ProductAdapterModel>();
             CreateMap<ProductAdapterModel, Product>();
             CreateMap<Order, OrderAdapterModel>();
