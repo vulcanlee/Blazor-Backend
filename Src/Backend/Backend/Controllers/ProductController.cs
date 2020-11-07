@@ -17,33 +17,33 @@ using ShareBusiness.Factories;
 
 namespace Backend.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class HoluserController : ControllerBase
+    public class ProductController : ControllerBase
     {
-        private readonly IHoluserService holuserService;
+        private readonly IProductService ProductService;
         private readonly IMapper mapper;
 
         #region 建構式
-        public HoluserController(IHoluserService holuserService,
+        public ProductController(IProductService ProductService,
             IMapper mapper)
         {
-            this.holuserService = holuserService;
+            this.ProductService = ProductService;
             this.mapper = mapper;
         }
         #endregion
 
         #region C 新增
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] HoluserDto holuser)
+        public async Task<IActionResult> Post([FromBody] ProductDto Productt)
         {
             APIResult apiResult;
-            Holuser record = mapper.Map<Holuser>(holuser);
+            Product record = mapper.Map<Product>(Productt);
             if (record != null)
             {
-                var isSuccessful = await holuserService.AddAsync(record);
+                var isSuccessful = await ProductService.AddAsync(record);
                 if (isSuccessful)
                 {
                     apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
@@ -69,7 +69,7 @@ namespace Backend.Controllers
         public async Task<IActionResult> Get()
         {
             APIResult apiResult;
-            var allUsers = await (await holuserService.GetAsync()).ToListAsync();
+            var allUsers = await (await ProductService.GetAsync()).ToListAsync();
             apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
                 ErrorMessageEnum.None, payload: allUsers);
             return Ok(apiResult);
@@ -79,7 +79,7 @@ namespace Backend.Controllers
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             APIResult apiResult;
-            var user = await holuserService.GetAsync(id);
+            var user = await ProductService.GetAsync(id);
             if (user != null)
             {
                 apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
@@ -96,15 +96,15 @@ namespace Backend.Controllers
 
         #region U 新增
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] HoluserDto holuser)
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] ProductDto Productt)
         {
             APIResult apiResult;
-            var record = await holuserService.GetAsync(id);
+            var record = await ProductService.GetAsync(id);
             if (record != null)
             {
-                Holuser recordTarget = mapper.Map<Holuser>(holuser);
-                recordTarget.HoluserId = id;
-                var isSuccessful = await holuserService.UpdateAsync(recordTarget);
+                Product recordTarget = mapper.Map<Product>(Productt);
+                recordTarget.ProductId = id;
+                var isSuccessful = await ProductService.UpdateAsync(recordTarget);
                 if (isSuccessful)
                 {
                     apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
@@ -130,10 +130,10 @@ namespace Backend.Controllers
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             APIResult apiResult;
-            var record = await holuserService.GetAsync(id);
+            var record = await ProductService.GetAsync(id);
             if (record != null)
             {
-                var isSuccessful = await holuserService.DeleteAsync(record);
+                var isSuccessful = await ProductService.DeleteAsync(record);
                 if (isSuccessful)
                 {
                     apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,

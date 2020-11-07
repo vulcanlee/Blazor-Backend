@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataTransferObject.DTOs
 {
-    public partial class HolusertDTO
+    public partial class HoluserDto
     {
         public int HoluserId { get; set; }
         public string Name { get; set; }

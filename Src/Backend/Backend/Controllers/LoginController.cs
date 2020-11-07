@@ -33,7 +33,7 @@ namespace Backend.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Post(LoginRequestDTO loginRequestDTO)
+        public async Task<IActionResult> Post(LoginRequestDto loginRequestDTO)
         {
             APIResult apiResult;
             await Task.Yield();
@@ -56,7 +56,7 @@ namespace Backend.Controllers
             string token = GenerateToken(user);
             string refreshToken = GenerateRefreshToken(user);
 
-            LoginResponseDTO LoginResponseDTO = new LoginResponseDTO()
+            LoginResponseDto LoginResponseDTO = new LoginResponseDto()
             {
                 Account = loginRequestDTO.Account,
                 Id = 0,
@@ -80,7 +80,7 @@ namespace Backend.Controllers
         {
             APIResult apiResult;
             await Task.Yield();
-            LoginRequestDTO loginRequestDTO = new LoginRequestDTO()
+            LoginRequestDto loginRequestDTO = new LoginRequestDto()
             {
                 Account = User.FindFirst(JwtRegisteredClaimNames.Sid)?.Value,
             };
@@ -96,7 +96,7 @@ namespace Backend.Controllers
             string token = GenerateToken(user);
             string refreshToken = GenerateRefreshToken(user);
 
-            LoginResponseDTO LoginResponseDTO = new LoginResponseDTO()
+            LoginResponseDto LoginResponseDTO = new LoginResponseDto()
             {
                 Account = loginRequestDTO.Account,
                 Id = 0,
