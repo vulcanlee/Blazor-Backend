@@ -15,7 +15,6 @@ namespace DataTransferObject.DTOs
         public decimal ListPrice { get; set; }
         public decimal Discount { get; set; }
 
-        public virtual OrderDto Order { get; set; }
         public virtual ProductDto Product { get; set; }
     }
 }

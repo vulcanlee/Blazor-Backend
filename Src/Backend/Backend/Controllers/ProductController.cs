@@ -37,28 +37,29 @@ namespace Backend.Controllers
 
         #region C 新增
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ProductDto Productt)
+        public async Task<IActionResult> Post([FromBody] ProductDto data)
         {
             APIResult apiResult;
-            Product record = mapper.Map<Product>(Productt);
+            Product record = mapper.Map<Product>(data);
             if (record != null)
             {
+                var result = mapper.Map<ProductDto>(record);
                 var isSuccessful = await ProductService.AddAsync(record);
                 if (isSuccessful)
                 {
-                    apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
-                        ErrorMessageEnum.None, payload: record);
+                    apiResult = APIResultFactory.Build(true, StatusCodes.Status201Created,
+                        ErrorMessageEnum.None, payload: result);
                 }
                 else
                 {
                     apiResult = APIResultFactory.Build(false, StatusCodes.Status200OK,
-                        ErrorMessageEnum.無法新增紀錄, payload: record);
+                        ErrorMessageEnum.無法新增紀錄, payload: result);
                 }
             }
             else
             {
                 apiResult = APIResultFactory.Build(false, StatusCodes.Status200OK,
-                    ErrorMessageEnum.傳送過來的資料有問題, payload: record);
+                    ErrorMessageEnum.傳送過來的資料有問題, payload: data);
             }
             return Ok(apiResult);
         }
@@ -69,86 +70,90 @@ namespace Backend.Controllers
         public async Task<IActionResult> Get()
         {
             APIResult apiResult;
-            var allUsers = await (await ProductService.GetAsync()).ToListAsync();
+            var records = await (await ProductService.GetAsync()).ToListAsync();
+            var result = mapper.Map<List<ProductDto>>(records);
             apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
-                ErrorMessageEnum.None, payload: allUsers);
+                ErrorMessageEnum.None, payload: result);
             return Ok(apiResult);
         }
-      
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             APIResult apiResult;
-            var user = await ProductService.GetAsync(id);
-            if (user != null)
+            var record = await ProductService.GetAsync(id);
+            var result = mapper.Map<ProductDto>(record);
+            if (record != null)
             {
                 apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
-                    ErrorMessageEnum.None, payload: user);
+                    ErrorMessageEnum.None, payload: result);
             }
             else
             {
                 apiResult = APIResultFactory.Build(false, StatusCodes.Status200OK,
-                    ErrorMessageEnum.沒有任何符合資料存在, payload: user);
+                    ErrorMessageEnum.沒有任何符合資料存在, payload: result);
             }
             return Ok(apiResult);
         }
         #endregion
 
-        #region U 新增
+        #region U 更新
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] ProductDto Productt)
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] ProductDto data)
         {
             APIResult apiResult;
             var record = await ProductService.GetAsync(id);
             if (record != null)
             {
-                Product recordTarget = mapper.Map<Product>(Productt);
+                Product recordTarget = mapper.Map<Product>(data);
                 recordTarget.ProductId = id;
+                var result = mapper.Map<ProductDto>(recordTarget);
                 var isSuccessful = await ProductService.UpdateAsync(recordTarget);
                 if (isSuccessful)
                 {
-                    apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
-                        ErrorMessageEnum.None, payload: recordTarget);
+                    apiResult = APIResultFactory.Build(true, StatusCodes.Status202Accepted,
+                        ErrorMessageEnum.None, payload: result);
                 }
                 else
                 {
                     apiResult = APIResultFactory.Build(false, StatusCodes.Status200OK,
-                        ErrorMessageEnum.無法修改紀錄, payload: record);
+                        ErrorMessageEnum.無法修改紀錄, payload: result);
                 }
             }
             else
             {
                 apiResult = APIResultFactory.Build(false, StatusCodes.Status200OK,
-                    ErrorMessageEnum.沒有任何符合資料存在, payload: record);
+                    ErrorMessageEnum.沒有任何符合資料存在, payload: data);
             }
             return Ok(apiResult);
         }
         #endregion
 
-        #region D 新增
+        #region D 刪除
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             APIResult apiResult;
             var record = await ProductService.GetAsync(id);
+            var result = mapper.Map<ProductDto>(record);
             if (record != null)
             {
                 var isSuccessful = await ProductService.DeleteAsync(record);
                 if (isSuccessful)
                 {
-                    apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
-                        ErrorMessageEnum.None, payload: record);
+                    apiResult = APIResultFactory.Build(true, StatusCodes.Status202Accepted,
+                        ErrorMessageEnum.None, payload: result);
                 }
                 else
                 {
                     apiResult = APIResultFactory.Build(false, StatusCodes.Status200OK,
-                        ErrorMessageEnum.無法刪除紀錄, payload: record);
+                        ErrorMessageEnum.無法刪除紀錄, payload: result);
                 }
             }
             else
             {
                 apiResult = APIResultFactory.Build(false, StatusCodes.Status200OK,
-                    ErrorMessageEnum.沒有任何符合資料存在, payload: record);
+                    ErrorMessageEnum.沒有任何符合資料存在, payload: result);
             }
             return Ok(apiResult);
         }

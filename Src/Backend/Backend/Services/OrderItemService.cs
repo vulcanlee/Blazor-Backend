@@ -23,7 +23,6 @@ namespace Backend.Services
         {
             return Task.FromResult(context.OrderItem
                 .AsNoTracking()
-                .Include(x => x.Order)
                 .Include(x => x.Product)
                 .AsQueryable());
         }
@@ -32,7 +31,6 @@ namespace Backend.Services
         {
             return Task.FromResult(context.OrderItem
                 .AsNoTracking()
-                .Include(x => x.Order)
                 .Include(x => x.Product)
                 .Where(x => x.OrderId == id)
                 .AsQueryable());

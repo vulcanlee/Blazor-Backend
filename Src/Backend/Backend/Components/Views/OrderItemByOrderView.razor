@@ -10,7 +10,7 @@
         <TabItems>
             <TabItem>
                 <ChildContent>
-                    <TabHeader Text="課程清單" />
+                    <TabHeader Text="訂單清單" />
                 </ChildContent>
                 <ContentTemplate>
                     <OrderView OnRecordChanged="RecordChanged" PageSize="PageSize" />
@@ -18,7 +18,7 @@
             </TabItem>
             <TabItem>
                 <ChildContent>
-                    <TabHeader Text="課程大綱" />
+                    <TabHeader Text="訂單明細大綱" />
                 </ChildContent>
                 <ContentTemplate>
                     <OrderItemView @ref="DetailView" CombineWithHeaderMode="true"

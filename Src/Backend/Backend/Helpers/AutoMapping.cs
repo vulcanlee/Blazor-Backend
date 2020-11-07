@@ -30,6 +30,10 @@ namespace Backend.Helpers
             CreateMap<HoluserDto, Holuser>();
             CreateMap<Product, ProductDto>();
             CreateMap<ProductDto, Product>();
+            CreateMap<Order, OrderDto>();
+            CreateMap<OrderDto, Order>();
+            CreateMap<OrderItem, OrderItemDto>();
+            CreateMap<OrderItemDto, OrderItem>();
             #endregion
         }
     }

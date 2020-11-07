@@ -17,43 +17,43 @@ using ShareBusiness.Factories;
 
 namespace Backend.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class HoluserController : ControllerBase
+    public class OrderController : ControllerBase
     {
-        private readonly IHoluserService holuserService;
+        private readonly IOrderService OrderService;
         private readonly IMapper mapper;
 
         #region 建構式
-        public HoluserController(IHoluserService holuserService,
+        public OrderController(IOrderService OrderService,
             IMapper mapper)
         {
-            this.holuserService = holuserService;
+            this.OrderService = OrderService;
             this.mapper = mapper;
         }
         #endregion
 
         #region C 新增
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] HoluserDto data)
+        public async Task<IActionResult> Post([FromBody] OrderDto data)
         {
             APIResult apiResult;
-            Holuser record = mapper.Map<Holuser>(data);
+            Order record = mapper.Map<Order>(data);
             if (record != null)
             {
-                var result = mapper.Map<HoluserDto>(record);
-                var isSuccessful = await holuserService.AddAsync(record);
+                var result = mapper.Map<OrderDto>(record);
+                var isSuccessful = await OrderService.AddAsync(record);
                 if (isSuccessful)
                 {
-                    apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
+                    apiResult = APIResultFactory.Build(true, StatusCodes.Status201Created,
                         ErrorMessageEnum.None, payload: result);
                 }
                 else
                 {
                     apiResult = APIResultFactory.Build(false, StatusCodes.Status200OK,
-                        ErrorMessageEnum.無法新增紀錄, payload: result);
+                        ErrorMessageEnum.無法新增紀錄, payload: record);
                 }
             }
             else
@@ -70,19 +70,19 @@ namespace Backend.Controllers
         public async Task<IActionResult> Get()
         {
             APIResult apiResult;
-            var records = await (await holuserService.GetAsync()).ToListAsync();
-            var result = mapper.Map<List<HoluserDto>>(records);
+            var records = await (await OrderService.GetAsync()).ToListAsync();
+            var result = mapper.Map<List<OrderDto>>(records);
             apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
                 ErrorMessageEnum.None, payload: result);
             return Ok(apiResult);
         }
-      
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             APIResult apiResult;
-            var record = await holuserService.GetAsync(id);
-            var result = mapper.Map<HoluserDto>(record);
+            var record = await OrderService.GetAsync(id);
+            var result = mapper.Map<OrderDto>(record);
             if (record != null)
             {
                 apiResult = APIResultFactory.Build(true, StatusCodes.Status200OK,
@@ -99,16 +99,16 @@ namespace Backend.Controllers
 
         #region U 更新
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] HoluserDto data)
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] OrderDto data)
         {
             APIResult apiResult;
-            var record = await holuserService.GetAsync(id);
+            var record = await OrderService.GetAsync(id);
             if (record != null)
             {
-                Holuser recordTarget = mapper.Map<Holuser>(data);
-                recordTarget.HoluserId = id;
-                var result = mapper.Map<HoluserDto>(recordTarget);
-                var isSuccessful = await holuserService.UpdateAsync(recordTarget);
+                Order recordTarget = mapper.Map<Order>(data);
+                recordTarget.OrderId = id;
+                var result = mapper.Map<OrderDto>(recordTarget);
+                var isSuccessful = await OrderService.UpdateAsync(recordTarget);
                 if (isSuccessful)
                 {
                     apiResult = APIResultFactory.Build(true, StatusCodes.Status202Accepted,
@@ -134,11 +134,11 @@ namespace Backend.Controllers
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             APIResult apiResult;
-            var record = await holuserService.GetAsync(id);
-            var result = mapper.Map<HoluserDto>(record);
+            var record = await OrderService.GetAsync(id);
+            var result = mapper.Map<OrderDto>(record);
             if (record != null)
             {
-                var isSuccessful = await holuserService.DeleteAsync(record);
+                var isSuccessful = await OrderService.DeleteAsync(record);
                 if (isSuccessful)
                 {
                     apiResult = APIResultFactory.Build(true, StatusCodes.Status202Accepted,
