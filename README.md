@@ -13,9 +13,25 @@
 * 使用 Database\SchemaAndData.sql 在本機 localDB 資料庫內，建立範例資料庫
 * 可以開始執行該 Blazor 專案，觀看預設的程式碼運作效果
 
-## 其他說明文件
+## 方便開發摘要內容
 
-[方便開發快速替換內容](Documents/SpeedDeveloperKit.md)
+OrderItem
 
-[設計規範指引](Documents/DeveloperGuideline.md)
+OrderItemService        `註冊服務`
+
+OrderItemSort
+
+OrderItemAdapterModel   `加入Form Validation 屬性宣告` `註冊 AutoMapper`
+
+OrderItemAdapter
+
+OrderItemRazorModel      `註冊服務`
+
+OrderItemView
+
+OrderItemPage           `註冊功能表選項`
+
+ProductPicker
+
+OrderItemByOrderView
 
